@@ -1,12 +1,13 @@
 import React, { useState, useEffect, } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
+import Person from './Person'
 
 export default function People() {
   const[people, setPeople] = useState([])
   const[prev, setPrev] = useState()
   const[next, setNext] = useState()
-  const[planet, setPlanet] = useState()
+  const[planet, setPlanet] = useState([])
 
   useEffect(()=> {
     axios.get('https://swapi.co/api/people/')
@@ -14,15 +15,34 @@ export default function People() {
         setPeople(res.data.results)
         setPrev(res.data.previous)
         setNext(res.data.next)
-        setPlanet(res.data.results.planet)
       })
   }, []);
 
-  const renderPeople = people.map(p => (
-    <Div>
-      {p.name}
+  const renderPeople = people.map((p, index) => (
+     // axios.get(`${p.homeworld}`)
+     //   .then( res => {
+     //     debugger
+     //      setPlanet.push(res.data.name)
+     //     console.log(planet)
+     //   })
+    <Div key={index}>
+      <h2>{p.name}</h2>
+      {getPlanetName(`${p.homeworld}`)}
     </Div>
-  ))
+    ))
+  
+   function getPlanetName(url) {
+     axios.get(`${url}`)
+       .then( res => {
+         debugger
+         console.log(res.data.name)
+         setPlanet(...res.data.name)
+         console.log(planet)
+         return (
+           res.data.name
+         )
+       })
+   }
 
   const handleNext = (e) => {
     e.preventDefault();
@@ -61,12 +81,11 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 15px;
-  align-items: center;
   background: black
+  justify-content: center;
 `
 
 const Div = styled.div`
-  align-items: center;
   padding: 5px;
   color: yellow;
 `
