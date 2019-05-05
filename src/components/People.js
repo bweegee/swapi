@@ -93,7 +93,6 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 15px;
-  background: black
   justify-content: center;
 `
 
@@ -102,7 +101,8 @@ const Div = styled.div`
   color: #FFE81F;
 `
 
-const Button = styled.div`
+const Button = styled.button`
+  font-family: Starjhol;
   font-size: 1.2rem;
   color: black;
   background-color: #FFE81F;
