@@ -2,19 +2,24 @@ import React, { useState, useEffect, } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 
-export default function Person({ planet }) {
+export default function Person({ person }) {
   const [homeworld, setHomeworld] = useState([])
 
   useEffect(()=> {
-    axios.get(`${planet}`)
+    axios.get(`${person.homeworld}`)
       .then( res => {
-        setHomeworld(res.data)
+        setHomeworld(res.data.name)
       })
-  }, []);
+  }, [person.homeworld]);
 
   return (
     <div>
-    {homeworld.name}
+      <h2>{person.name}</h2>
+      <h4>{homeworld}</h4>
     </div>
   )
 }
+
+const Div = styled.div`
+
+`

@@ -12,38 +12,45 @@ export default function People() {
   useEffect(()=> {
     axios.get('https://swapi.co/api/people/')
       .then( res => {
-        setPeople(res.data.results)
         setPrev(res.data.previous)
         setNext(res.data.next)
-      })
+        setPeople(res.data.results)
+      });
   }, []);
 
-  const renderPeople = people.map((p, index) => (
-     // axios.get(`${p.homeworld}`)
-     //   .then( res => {
-     //     debugger
-     //      setPlanet.push(res.data.name)
-     //     console.log(planet)
-     //   })
-    <Div key={index}>
-      <h2>{p.name}</h2>
-      {getPlanetName(`${p.homeworld}`)}
-    </Div>
-    ))
-  
-   function getPlanetName(url) {
-     axios.get(`${url}`)
-       .then( res => {
-         debugger
-         console.log(res.data.name)
-         setPlanet(...res.data.name)
-         console.log(planet)
-         return (
-           res.data.name
-         )
-       })
-   }
+  // useEffect(()=> {
+  //           people.map( p => {
+  //             axios.get(`${p.homeworld}`)
+  //               .then( res => {
+  //                 setPlanet([planet, ...res.data.name])
+  //                 console.log(res.data.name)
+  //               })
+  //           })
+  // }, []);
 
+  // function getPlanet(url) {
+  //    axios.get(`${url}`)
+  //      .then( res => {
+  //        debugger
+  //        console.log(res.data.name)
+  //        setPlanet(res.data.name)
+  //      });
+  //  }
+
+  // const renderPeople = people.map((p, index) => (
+  //    // axios.get(`${p.homeworld}`)
+  //    //   .then( res => {
+  //    //     debugger
+  //    //      setPlanet.push(res.data.name)
+  //    //     console.log(planet)
+  //    //   })
+  //   <Div key={index}>
+  //     <h2>{p.name}</h2>
+  //     {getPlanet(`${p.homeworld}`)}
+  //     {planet}
+  //   </Div>
+  //   ))
+  
   const handleNext = (e) => {
     e.preventDefault();
     axios.get(`${next}`)
@@ -67,11 +74,16 @@ export default function People() {
   return (
       <Div>
     <Grid>
-      {renderPeople}
+      { people.map( (p, index) => (
+        <Person
+          key={index}
+          person={p}
+        />
+      ))}
       <br />
     </Grid>
-        { prev !== null ? <button onClick={handlePrev}>prev</button> : null }
-        { next !== null ? <button onClick={handleNext}>next</button> : null }
+        { prev !== null ? <Button onClick={handlePrev}>prev</Button> : null }
+        { next !== null ? <Button onClick={handleNext}>next</Button> : null }
       </Div>
   )
 
@@ -87,5 +99,12 @@ const Grid = styled.div`
 
 const Div = styled.div`
   padding: 5px;
-  color: yellow;
+  color: #FFE81F;
 `
+
+const Button = styled.div`
+  font-size: 1.2rem;
+  color: black;
+  background-color: #FFE81F;
+`
+  
