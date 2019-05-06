@@ -1,4 +1,4 @@
-import React, { useState, useEffect, } from 'react'
+import React, { Fragment, useState, useEffect, } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 import Person from './Person'
@@ -7,104 +7,73 @@ export default function People() {
   const[people, setPeople] = useState([])
   const[prev, setPrev] = useState()
   const[next, setNext] = useState()
-  const[planet, setPlanet] = useState([])
+  const[isLoading, setIsLoading] = useState(false)
+  const[url, setUrl] = useState(
+    'https://swapi.co/api/people/'
+  )
 
   useEffect(()=> {
-    axios.get('https://swapi.co/api/people/')
-      .then( res => {
-        setPrev(res.data.previous)
-        setNext(res.data.next)
-        setPeople(res.data.results)
-      });
-  }, []);
+    const fetchData = async () => {
+      setIsLoading(true);
 
-  // useEffect(()=> {
-  //           people.map( p => {
-  //             axios.get(`${p.homeworld}`)
-  //               .then( res => {
-  //                 setPlanet([planet, ...res.data.name])
-  //                 console.log(res.data.name)
-  //               })
-  //           })
-  // }, []);
+      const res = await axios(url);
 
-  // function getPlanet(url) {
-  //    axios.get(`${url}`)
-  //      .then( res => {
-  //        debugger
-  //        console.log(res.data.name)
-  //        setPlanet(res.data.name)
-  //      });
-  //  }
+      setPrev(res.data.previous);
+      setNext(res.data.next);
+      setPeople(res.data.results);
+      setIsLoading(false);
+    };
 
-  // const renderPeople = people.map((p, index) => (
-  //    // axios.get(`${p.homeworld}`)
-  //    //   .then( res => {
-  //    //     debugger
-  //    //      setPlanet.push(res.data.name)
-  //    //     console.log(planet)
-  //    //   })
-  //   <Div key={index}>
-  //     <h2>{p.name}</h2>
-  //     {getPlanet(`${p.homeworld}`)}
-  //     {planet}
-  //   </Div>
-  //   ))
+    fetchData();
+
+  }, [url]);
   
-  const handleNext = (e) => {
-    e.preventDefault();
-    axios.get(`${next}`)
-      .then( res => {
-        setPeople(res.data.results)
-        setPrev(res.data.previous)
-        setNext(res.data.next)
-      })
-  }
-
-  const handlePrev = (e) => {
-    e.preventDefault();
-    axios.get(`${prev}`)
-      .then( res => {
-        setPeople(res.data.results)
-        setPrev(res.data.previous)
-        setNext(res.data.next)
-      })
-  }
-
   return (
-      <Div>
-    <Grid>
-      { people.map( (p, index) => (
-        <Person
-          key={index}
-          person={p}
-        />
-      ))}
-      <br />
-    </Grid>
-        { prev !== null ? <Button onClick={handlePrev}>prev</Button> : null }
-        { next !== null ? <Button onClick={handleNext}>next</Button> : null }
-      </Div>
+    <Fragment>
+    {isLoading ? (
+      <Load>Loading ...</Load>
+    ) : (
+    <Div>
+      <Grid>
+        { people.map( (p, index) => (
+          <Person
+            key={index}
+            person={p}
+          />
+        ))}
+        <br />
+      </Grid>
+      { prev !== null ? <Button onClick={() => setUrl(prev)}>prev</Button> : null }
+      { next !== null ? <Button onClick={() => setUrl(next)}>next</Button> : null }
+    </Div>
+    )}
+  </Fragment>
   )
 
 }
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   grid-gap: 15px;
-  justify-content: center;
+  margin-left: 20px;
 `
 
 const Div = styled.div`
-  padding: 5px;
   color: #FFE81F;
 `
 
-const Button = styled.button`
-  font-family: Starjhol;
+const Load = styled.div`
+  color: #FFE81F;
+  align-items: center;
   font-size: 1.2rem;
+`
+
+const Button = styled.button`
+  font-family: Starjout;
+  font-size: 1.5rem;
   color: black;
   background-color: #FFE81F;
+  padding: 10px;
+  margin: 10px;
 `
-  

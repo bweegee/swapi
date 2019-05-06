@@ -13,6 +13,11 @@
   src: url('./fonts/Starjhol.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'STARWARS';
+  src: url('./fonts/STARWARS.woff') format('woff');
+}
+
 html { 
   background: url('./images/DeathStar.jpg') no-repeat center center fixed; 
   -webkit-background-size: cover;
@@ -24,7 +29,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Starjhol', sans-serif;
+  font-family: 'STARWARS', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
