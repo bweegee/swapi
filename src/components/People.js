@@ -14,6 +14,7 @@ export default function People() {
 
   useEffect(()=> {
     const fetchData = async () => {
+
       setIsLoading(true);
 
       const res = await axios(url);
