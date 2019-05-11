@@ -1,3 +1,22 @@
+![](src/images/home.png)
+![](src/images/people.png)
+
+## Star Wars API
+https://swapi.co/documentation#intro
+### `Objectives`
+  * Create a new react app using create-react-app
+  * Style the application with any CSS framework of your choosing (semantic-ui-react)
+  * Create a new People Component -  client/src/components
+  * Add a new client side route - /people that renders our new People Component. Our routes are defined in client/src/components/App.js.
+  * Use axios, fetch or any other HTTP Request library to GET all the people from api/people. The way you choose to display / style this is up to you.
+  * Create a new component called Planets. As you display each person, render the person's home planet and have it as a clickable link that takes them to the new Planets Component and route that shows that planet's information. You will need to make another api call to get the planet data. The way you choose to display / style this is up to you.
+
+### `Bonus`
+
+  * Write the whole app in React hooks.
+  * Get the person's planet's name to show up on the Peoples Component.  
+
+***
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
