@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect, } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
+import { Link, } from 'react-router-dom'
 
 export default function Person({ person }) {
   const [homeworld, setHomeworld] = useState(null)
@@ -25,7 +26,9 @@ export default function Person({ person }) {
       ) : (
     <GridCell>
       <Name>{person.name}</Name>
-      <h4>{homeworld}</h4>
+      <Link to={`/homeworld/${homeworld}`}>
+        <h4>{homeworld}</h4>
+      </Link>
     </GridCell>
       )}
   </Fragment>

@@ -6,12 +6,12 @@ export default function Navbar() {
   return (
     <List>
       <Item>
-        <Link to='/People'>
+        <Link to='/People' style= {{  color: 'white', textDecoration: 'none' }}>
           People
         </Link>
       </Item>
       <Item>
-        <Link to='/Planets'>
+        <Link to='/Planets' style= {{  color: 'white', textDecoration: 'none' }}>
           Planets
         </Link>
       </Item>
